@@ -25,9 +25,6 @@ export const FormBlock: Block = {
     {
       name: 'introContent',
       type: 'richText',
-      admin: {
-        condition: (_, { enableIntro }) => Boolean(enableIntro),
-      },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [

@@ -1,4 +1,4 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
+import type { Post, ArchiveBlock as ArchiveBlockProps, Experience, Stack, Project, Song, Tool } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
@@ -6,17 +6,33 @@ import React from 'react'
 import RichText from '@/components/RichText'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import { CMSLink } from '@/components/Link'
 
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
     id?: string
   }
 > = async (props) => {
-  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
+  const {
+    id,
+    categories,
+    introContent,
+    limit: limitFromProps,
+    populateBy,
+    selectedDocs,
+    relationTo,
+    showAllLink ,
+    showAllLinkLabel,
+    showAllLinkUrl
+  } = props
+
+  if (relationTo === undefined || relationTo === null) {
+    throw new Error('relationTo is required')
+  }
 
   const limit = limitFromProps || 3
 
-  let posts: Post[] = []
+  let archiveList: Post[] | Experience[] | Project[] | Song[] | Stack[] | Tool[] = []
 
   if (populateBy === 'collection') {
     const payload = await getPayloadHMR({ config: configPromise })
@@ -27,7 +43,7 @@ export const ArchiveBlock: React.FC<
     })
 
     const fetchedPosts = await payload.find({
-      collection: 'posts',
+      collection: relationTo,
       depth: 1,
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
@@ -41,16 +57,19 @@ export const ArchiveBlock: React.FC<
         : {}),
     })
 
-    posts = fetchedPosts.docs
+    archiveList = fetchedPosts.docs
   } else {
     if (selectedDocs?.length) {
       const filteredSelectedPosts = selectedDocs.map((post) => {
         if (typeof post.value === 'object') return post.value
       }) as Post[]
 
-      posts = filteredSelectedPosts
+      archiveList = filteredSelectedPosts
     }
   }
+
+  console.log(showAllLinkUrl !== undefined && showAllLinkUrl !== null && showAllLinkUrl.value['slug'])
+  console.log(showAllLinkLabel)
 
   return (
     <div className="my-16" id={`block-${id}`}>
@@ -59,7 +78,12 @@ export const ArchiveBlock: React.FC<
           <RichText className="ml-0 max-w-[48rem]" content={introContent} enableGutter={false} />
         </div>
       )}
-      <CollectionArchive posts={posts} />
+      <CollectionArchive archiveList={archiveList} relationTo={relationTo} />
+      {showAllLink && (
+        <div className="container">
+          <CMSLink label={showAllLinkLabel} url={showAllLinkUrl !== undefined && showAllLinkUrl !== null && showAllLinkUrl.value['slug']}/>
+        </div>
+      )}
     </div>
   )
 }

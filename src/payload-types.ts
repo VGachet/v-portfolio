@@ -16,6 +16,11 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    experiences: Experience;
+    tools: Tool;
+    stacks: Stack;
+    projects: Project;
+    songs: Song;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -31,6 +36,11 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    experiences: ExperiencesSelect<false> | ExperiencesSelect<true>;
+    tools: ToolsSelect<false> | ToolsSelect<true>;
+    stacks: StacksSelect<false> | StacksSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    songs: SongsSelect<false> | SongsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -84,8 +94,7 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+  hero?: {
     richText?: {
       root: {
         type: string;
@@ -104,6 +113,7 @@ export interface Page {
     links?:
       | {
           link: {
+            label: string;
             type?: ('reference' | 'custom') | null;
             newTab?: boolean | null;
             reference?: {
@@ -111,15 +121,14 @@ export interface Page {
               value: string | Page;
             } | null;
             url?: string | null;
-            label: string;
-            appearance?: ('default' | 'outline') | null;
+            appearance?: ('default' | 'button') | null;
           };
           id?: string | null;
         }[]
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
     title?: string | null;
     image?: (string | null) | Media;
@@ -218,46 +227,6 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
- */
-export interface CallToActionBlock {
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?: {
-            relationTo: 'pages';
-            value: string | Page;
-          } | null;
-          url?: string | null;
-          label: string;
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'cta';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
@@ -280,7 +249,8 @@ export interface ContentBlock {
           [k: string]: unknown;
         } | null;
         enableLink?: boolean | null;
-        link?: {
+        link: {
+          label: string;
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?: {
@@ -288,8 +258,7 @@ export interface ContentBlock {
             value: string | Page;
           } | null;
           url?: string | null;
-          label: string;
-          appearance?: ('default' | 'outline') | null;
+          appearance?: ('default' | 'button') | null;
         };
         id?: string | null;
       }[]
@@ -330,15 +299,43 @@ export interface ArchiveBlock {
     [k: string]: unknown;
   } | null;
   populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
+  relationTo?: ('posts' | 'experiences' | 'projects' | 'stacks' | 'tools' | 'songs') | null;
   categories?: (string | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
-    | {
-        relationTo: 'posts';
-        value: string | Post;
-      }[]
+    | (
+        | {
+            relationTo: 'posts';
+            value: string | Post;
+          }
+        | {
+            relationTo: 'experiences';
+            value: string | Experience;
+          }
+        | {
+            relationTo: 'projects';
+            value: string | Project;
+          }
+        | {
+            relationTo: 'stacks';
+            value: string | Stack;
+          }
+        | {
+            relationTo: 'tools';
+            value: string | Tool;
+          }
+        | {
+            relationTo: 'songs';
+            value: string | Song;
+          }
+      )[]
     | null;
+  showAllLink?: boolean | null;
+  showAllLinkUrl?: {
+    relationTo: 'pages';
+    value: string | Page;
+  } | null;
+  showAllLinkLabel?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
@@ -422,6 +419,184 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experiences".
+ */
+export interface Experience {
+  id: string;
+  media: string | Media;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  from: string;
+  to?: string | null;
+  enabledLink?: boolean | null;
+  link?: {
+    label: string;
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    appearance?: ('default' | 'button') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  media?: (string | Media)[] | null;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  enabledLink?: boolean | null;
+  link?: {
+    label: string;
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    appearance?: ('default' | 'button') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stacks".
+ */
+export interface Stack {
+  id: string;
+  media?: (string | null) | Media;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  enabledLink?: boolean | null;
+  link?: {
+    label: string;
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    appearance?: ('default' | 'button') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tools".
+ */
+export interface Tool {
+  id: string;
+  media?: (string | null) | Media;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  enabledLink?: boolean | null;
+  link?: {
+    label: string;
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?: {
+      relationTo: 'pages';
+      value: string | Page;
+    } | null;
+    url?: string | null;
+    appearance?: ('default' | 'button') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "songs".
+ */
+export interface Song {
+  id: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -709,6 +884,26 @@ export interface PayloadLockedDocument {
         value: string | User;
       } | null)
     | ({
+        relationTo: 'experiences';
+        value: string | Experience;
+      } | null)
+    | ({
+        relationTo: 'tools';
+        value: string | Tool;
+      } | null)
+    | ({
+        relationTo: 'stacks';
+        value: string | Stack;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'songs';
+        value: string | Song;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: string | Redirect;
       } | null)
@@ -775,7 +970,6 @@ export interface PagesSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        type?: T;
         richText?: T;
         links?:
           | T
@@ -783,11 +977,11 @@ export interface PagesSelect<T extends boolean = true> {
               link?:
                 | T
                 | {
+                    label?: T;
                     type?: T;
                     newTab?: T;
                     reference?: T;
                     url?: T;
-                    label?: T;
                     appearance?: T;
                   };
               id?: T;
@@ -797,28 +991,6 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
-        cta?:
-          | T
-          | {
-              richText?: T;
-              links?:
-                | T
-                | {
-                    link?:
-                      | T
-                      | {
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          label?: T;
-                          appearance?: T;
-                        };
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
         content?:
           | T
           | {
@@ -831,11 +1003,11 @@ export interface PagesSelect<T extends boolean = true> {
                     link?:
                       | T
                       | {
+                          label?: T;
                           type?: T;
                           newTab?: T;
                           reference?: T;
                           url?: T;
-                          label?: T;
                           appearance?: T;
                         };
                     id?: T;
@@ -860,6 +1032,9 @@ export interface PagesSelect<T extends boolean = true> {
               categories?: T;
               limit?: T;
               selectedDocs?: T;
+              showAllLink?: T;
+              showAllLinkUrl?: T;
+              showAllLinkLabel?: T;
               id?: T;
               blockName?: T;
             };
@@ -1037,6 +1212,105 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experiences_select".
+ */
+export interface ExperiencesSelect<T extends boolean = true> {
+  media?: T;
+  title?: T;
+  content?: T;
+  from?: T;
+  to?: T;
+  enabledLink?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        appearance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tools_select".
+ */
+export interface ToolsSelect<T extends boolean = true> {
+  media?: T;
+  title?: T;
+  content?: T;
+  enabledLink?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        appearance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stacks_select".
+ */
+export interface StacksSelect<T extends boolean = true> {
+  media?: T;
+  title?: T;
+  content?: T;
+  enabledLink?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        appearance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  media?: T;
+  title?: T;
+  content?: T;
+  enabledLink?: T;
+  link?:
+    | T
+    | {
+        label?: T;
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        appearance?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "songs_select".
+ */
+export interface SongsSelect<T extends boolean = true> {
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1270,6 +1544,7 @@ export interface Header {
   navItems?:
     | {
         link: {
+          label: string;
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?: {
@@ -1277,7 +1552,7 @@ export interface Header {
             value: string | Page;
           } | null;
           url?: string | null;
-          label: string;
+          appearance?: ('default' | 'button') | null;
         };
         id?: string | null;
       }[]
@@ -1294,6 +1569,7 @@ export interface Footer {
   navItems?:
     | {
         link: {
+          label: string;
           type?: ('reference' | 'custom') | null;
           newTab?: boolean | null;
           reference?: {
@@ -1301,7 +1577,7 @@ export interface Footer {
             value: string | Page;
           } | null;
           url?: string | null;
-          label: string;
+          appearance?: ('default' | 'button') | null;
         };
         id?: string | null;
       }[]
@@ -1320,11 +1596,12 @@ export interface HeaderSelect<T extends boolean = true> {
         link?:
           | T
           | {
+              label?: T;
               type?: T;
               newTab?: T;
               reference?: T;
               url?: T;
-              label?: T;
+              appearance?: T;
             };
         id?: T;
       };
@@ -1343,11 +1620,12 @@ export interface FooterSelect<T extends boolean = true> {
         link?:
           | T
           | {
+              label?: T;
               type?: T;
               newTab?: T;
               reference?: T;
               url?: T;
-              label?: T;
+              appearance?: T;
             };
         id?: T;
       };

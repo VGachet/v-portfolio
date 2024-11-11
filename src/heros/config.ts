@@ -14,31 +14,6 @@ export const hero: Field = {
   type: 'group',
   fields: [
     {
-      name: 'type',
-      type: 'select',
-      defaultValue: 'lowImpact',
-      label: 'Type',
-      options: [
-        {
-          label: 'None',
-          value: 'none',
-        },
-        {
-          label: 'High Impact',
-          value: 'highImpact',
-        },
-        {
-          label: 'Medium Impact',
-          value: 'mediumImpact',
-        },
-        {
-          label: 'Low Impact',
-          value: 'lowImpact',
-        },
-      ],
-      required: true,
-    },
-    {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({
@@ -53,19 +28,11 @@ export const hero: Field = {
       }),
       label: false,
     },
-    linkGroup({
-      overrides: {
-        maxRows: 2,
-      },
-    }),
+    linkGroup,
     {
       name: 'media',
       type: 'upload',
-      admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
-      },
       relationTo: 'media',
-      required: true,
     },
   ],
   label: false,

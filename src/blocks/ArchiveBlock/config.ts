@@ -54,13 +54,33 @@ export const Archive: Block = {
           label: 'Posts',
           value: 'posts',
         },
+        {
+          label: 'Experiences',
+          value: 'experiences',
+        },
+        {
+          label: 'Projects',
+          value: 'projects',
+        },
+        {
+          label: 'Stacks',
+          value: 'stacks',
+        },
+        {
+          label: 'Tools',
+          value: 'tools',
+        },
+        {
+          label: 'Songs',
+          value: 'songs',
+        },
       ],
     },
     {
       name: 'categories',
       type: 'relationship',
       admin: {
-        condition: (_, siblingData) => siblingData.populateBy === 'collection',
+        condition: (_, siblingData) => siblingData.populateBy === 'collection' && siblingData.relationTo === 'posts',
       },
       hasMany: true,
       label: 'Categories To Show',
@@ -84,8 +104,36 @@ export const Archive: Block = {
       },
       hasMany: true,
       label: 'Selection',
-      relationTo: ['posts'],
+      relationTo: ['posts', 'experiences', 'projects', 'stacks', 'tools', 'songs'],
     },
+    {
+      name: 'showAllLink',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Display "Show All" Link',
+    },
+    {
+      name: 'showAllLinkUrl',
+      label: '"Show all" link url',
+      type: 'relationship',
+      relationTo: ['pages'],
+      required: true,
+      maxDepth: 1,
+      admin: {
+        condition: (_, siblingData) => siblingData.showAllLink,
+        width: '50%',
+      },
+    },
+    {
+      name: 'showAllLinkLabel',
+      label: '"Show all" link label',
+      type: 'text',
+      required: true,
+      admin: {
+        condition: (_, siblingData) => siblingData.showAllLink,
+        width: '50%',
+      },
+    }
   ],
   labels: {
     plural: 'Archives',
