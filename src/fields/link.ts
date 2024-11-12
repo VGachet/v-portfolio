@@ -7,7 +7,7 @@ type LinkType = (options?: {
 
 export const link: LinkType = ({ overrides = {} } = {}) => {
   const linkResult: Field = {
-   name: 'link',
+    name: 'link',
     label: 'Link',
     type: 'group',
     fields: [
@@ -48,7 +48,7 @@ export const link: LinkType = ({ overrides = {} } = {}) => {
         name: 'reference',
         label: 'Document to link to',
         type: 'relationship',
-        relationTo: ['pages'],
+        relationTo: ['pages', 'posts'],
         required: true,
         maxDepth: 1,
         admin: {

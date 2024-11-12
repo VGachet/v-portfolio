@@ -4,10 +4,14 @@ import Link from 'next/link'
 import React from 'react'
 
 import type { Page, Post } from '@/payload-types'
+import { ArrowUpRightIcon } from 'lucide-react'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+import configPromise from '@payload-config'
 
 type CMSLinkType = {
   children?: React.ReactNode
   className?: string
+  variant?: ButtonProps['variant'] | null
   label?: string | null
   newTab?: boolean | null
   reference?: {
@@ -17,6 +21,13 @@ type CMSLinkType = {
   size?: ButtonProps['size'] | null
   type?: 'custom' | 'reference' | null
   url?: string | null
+  displayIcon?: boolean | null
+}
+
+type Args = {
+  params: Promise<{
+    slug?: string
+  }>
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
@@ -24,18 +35,20 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     type,
     children,
     className,
+    variant,
     label,
     newTab,
     reference,
     size: sizeFromProps,
     url,
+    displayIcon,
   } = props
 
   const href =
     type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
       ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
-          reference.value.slug
-        }`
+        reference.value.slug
+      }`
       : url
 
   if (!href) return null
@@ -44,10 +57,11 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
   return (
-    <Button asChild className={className} size={size}>
+    <Button asChild className={className} size={size} variant={variant}>
       <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
         {children && children}
+        {displayIcon && <ArrowUpRightIcon size={18} color='grey'/>}
       </Link>
     </Button>
   )

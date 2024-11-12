@@ -124,7 +124,18 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Experiences, Tools, Stacks, Projects, Songs], // collections-import-placeholder
+  collections: [
+    Pages,
+    Posts,
+    Media,
+    Categories,
+    Users,
+    Experiences,
+    Tools,
+    Stacks,
+    Projects,
+    Songs
+  ], // collections-import-placeholder
   cors: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

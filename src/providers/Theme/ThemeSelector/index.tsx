@@ -13,6 +13,12 @@ import type { Theme } from './types'
 
 import { useTheme } from '..'
 import { themeLocalStorageKey } from './types'
+import {
+  NavigationMenuContent,
+  NavigationMenuItem, NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '@/components/ui/navigation-menu'
 
 export const ThemeSelector: React.FC = () => {
   const { setTheme } = useTheme()

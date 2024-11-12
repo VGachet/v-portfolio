@@ -42,7 +42,7 @@ export const ArchiveBlock: React.FC<
       else return category
     })
 
-    const fetchedPosts = await payload.find({
+    const fetchedCollection = await payload.find({
       collection: relationTo,
       depth: 1,
       limit,
@@ -57,7 +57,7 @@ export const ArchiveBlock: React.FC<
         : {}),
     })
 
-    archiveList = fetchedPosts.docs
+    archiveList = fetchedCollection.docs
   } else {
     if (selectedDocs?.length) {
       const filteredSelectedPosts = selectedDocs.map((post) => {
@@ -68,9 +68,6 @@ export const ArchiveBlock: React.FC<
     }
   }
 
-  console.log(showAllLinkUrl !== undefined && showAllLinkUrl !== null && showAllLinkUrl.value['slug'])
-  console.log(showAllLinkLabel)
-
   return (
     <div className="my-16" id={`block-${id}`}>
       {introContent && (
@@ -79,9 +76,9 @@ export const ArchiveBlock: React.FC<
         </div>
       )}
       <CollectionArchive archiveList={archiveList} relationTo={relationTo} />
-      {showAllLink && (
+      {showAllLink && showAllLinkUrl !== undefined && showAllLinkUrl !== null && (
         <div className="container">
-          <CMSLink label={showAllLinkLabel} url={showAllLinkUrl !== undefined && showAllLinkUrl !== null && showAllLinkUrl.value['slug']}/>
+          <CMSLink label={showAllLinkLabel} url={showAllLinkUrl.value['slug']}/>
         </div>
       )}
     </div>
