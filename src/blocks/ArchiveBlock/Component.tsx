@@ -1,4 +1,4 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps, Experience, Stack, Project, Song, Tool } from '@/payload-types'
+import type { ArchiveBlock as ArchiveBlockProps, Experience, Post, Project, Song, Stack, Tool } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
@@ -60,19 +60,17 @@ export const ArchiveBlock: React.FC<
     archiveList = fetchedCollection.docs
   } else {
     if (selectedDocs?.length) {
-      const filteredSelectedPosts = selectedDocs.map((post) => {
+      archiveList = selectedDocs.map((post) => {
         if (typeof post.value === 'object') return post.value
       }) as Post[]
-
-      archiveList = filteredSelectedPosts
     }
   }
 
   return (
-    <div className="my-16" id={`block-${id}`}>
+    <div id={`block-${id}`}>
       {introContent && (
-        <div className="container mb-16">
-          <RichText className="ml-0 max-w-[48rem]" content={introContent} enableGutter={false} />
+        <div className="container">
+          <RichText className="ml-0 max-w-[48rem]" content={introContent} />
         </div>
       )}
       <CollectionArchive archiveList={archiveList} relationTo={relationTo} />

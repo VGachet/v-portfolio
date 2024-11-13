@@ -62,7 +62,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       </div>
 
       {posts.totalDocs > 0 ? (
-        <CollectionArchive posts={posts.docs as unknown as Post[]} />
+        <CollectionArchive archiveList={posts.docs as unknown as Post[]} relationTo='post'/>
       ) : (
         <div className="container">No results found.</div>
       )}

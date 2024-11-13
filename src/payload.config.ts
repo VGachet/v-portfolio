@@ -34,6 +34,7 @@ import { Songs } from './collections/Songs'
 import Users from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
+import { Menu } from './Menu/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { Page, Post } from 'src/payload-types'
@@ -137,7 +138,7 @@ export default buildConfig({
     Songs
   ], // collections-import-placeholder
   cors: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, Menu],
   plugins: [
     redirectsPlugin({
       collections: ['pages', 'posts'],

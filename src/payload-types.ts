@@ -55,10 +55,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    menu: Menu;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    menu: MenuSelect<false> | MenuSelect<true>;
   };
   locale: null;
   user: User & {
@@ -317,7 +319,6 @@ export interface User {
 export interface ContentBlock {
   columns?:
     | {
-        size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
         richText?: {
           root: {
             type: string;
@@ -334,22 +335,16 @@ export interface ContentBlock {
           [k: string]: unknown;
         } | null;
         enableLink?: boolean | null;
-        link: {
-          label: string;
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: string | Post;
-              } | null);
-          url?: string | null;
-          appearance?: ('default' | 'button') | null;
-        };
+        linkUrl?:
+          | ({
+              relationTo: 'pages';
+              value: string | Page;
+            } | null)
+          | ({
+              relationTo: 'posts';
+              value: string | Post;
+            } | null);
+        linkLabel?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -1027,19 +1022,10 @@ export interface PagesSelect<T extends boolean = true> {
               columns?:
                 | T
                 | {
-                    size?: T;
                     richText?: T;
                     enableLink?: T;
-                    link?:
-                      | T
-                      | {
-                          label?: T;
-                          type?: T;
-                          newTab?: T;
-                          reference?: T;
-                          url?: T;
-                          appearance?: T;
-                        };
+                    linkUrl?: T;
+                    linkLabel?: T;
                     id?: T;
                   };
               id?: T;
@@ -1627,6 +1613,36 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu".
+ */
+export interface Menu {
+  id: string;
+  navItems?:
+    | {
+        link: {
+          label: string;
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null);
+          url?: string | null;
+          appearance?: ('default' | 'button') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -1654,6 +1670,30 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              label?: T;
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "menu_select".
+ */
+export interface MenuSelect<T extends boolean = true> {
   navItems?:
     | T
     | {

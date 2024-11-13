@@ -7,32 +7,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-import { link } from '@/fields/link'
-
 const columnFields: Field[] = [
-  {
-    name: 'size',
-    type: 'select',
-    defaultValue: 'oneThird',
-    options: [
-      {
-        label: 'One Third',
-        value: 'oneThird',
-      },
-      {
-        label: 'Half',
-        value: 'half',
-      },
-      {
-        label: 'Two Thirds',
-        value: 'twoThirds',
-      },
-      {
-        label: 'Full',
-        value: 'full',
-      },
-    ],
-  },
   {
     name: 'richText',
     type: 'richText',
@@ -51,8 +26,31 @@ const columnFields: Field[] = [
   {
     name: 'enableLink',
     type: 'checkbox',
+    defaultValue: false,
+    label: 'Enable link',
   },
-  link(),
+  {
+    name: 'linkUrl',
+    label: 'Link URL',
+    type: 'relationship',
+    relationTo: ['pages', 'posts'],
+    required: true,
+    maxDepth: 1,
+    admin: {
+      condition: (_, siblingData) => siblingData.enableLink,
+      width: '50%',
+    },
+  },
+  {
+    name: 'linkLabel',
+    label: 'Link label',
+    type: 'text',
+    required: true,
+    admin: {
+      condition: (_, siblingData) => siblingData.enableLink,
+      width: '50%',
+    },
+  }
 ]
 
 export const Content: Block = {

@@ -32,7 +32,7 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={index}>
+                <div key={index} className='my-2'>
                   {/* @ts-expect-error */}
                   <Block {...block} />
                 </div>

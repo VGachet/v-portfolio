@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 
-import { cn } from 'src/utilities/cn'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'
+import { Menu } from '@/Menu/Component'
 import { Header } from '@/Header/Component'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { Providers } from '@/providers'
@@ -15,18 +13,25 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
 import './globals.css'
+import { Libre_Franklin } from 'next/font/google'
+
+const libreFranklin = Libre_Franklin({subsets: ['latin']})
+
+import { Analytics } from '@vercel/analytics/next';
+import { cn } from '@/utilities/cn'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
-      <body>
+      <body className={cn(libreFranklin.className, 'max-w-[900px]', 'mx-auto')}>
+        <Analytics />
         <Providers>
           <AdminBar
             adminBarProps={{
@@ -37,6 +42,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           <Header />
           {children}
+          <Menu />
           <Footer />
         </Providers>
       </body>
