@@ -23,7 +23,7 @@ export const Tile: React.FC<{
   const newTabProps = link?.newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
   return (
-    <a className={cn('flex items-center py-2', className)} href={
+    <a className={cn('flex items-center py-2 hover:bg-card rounded-lg transition-colors', className)} href={
       link && link.url
         ? link.url
         : link && link.reference != null && typeof link.reference === 'object' && link.reference.value && link.reference.value['slug']
@@ -32,8 +32,8 @@ export const Tile: React.FC<{
     } {...newTabProps}>
       <div className="max-w-[60px]">
         {!media && <div className="">No image</div>}
-        {Array.isArray(media) && media.length > 0 && <Media imgClassName={'rounded'} resource={media[0]} size={'60px'} />}
-        {media && !Array.isArray(media) && <Media imgClassName={'rounded'} resource={media} size={'60px'} />}
+        {Array.isArray(media) && media.length > 0 && <Media imgClassName={'rounded-lg aspect-square'} resource={media[0]} size={'60px'} />}
+        {media && !Array.isArray(media) && <Media imgClassName={'rounded-lg aspect-square'} resource={media} size={'60px'} />}
       </div>
       <div className="pl-3 text-sm">
         {title && <h5>{title}</h5>}

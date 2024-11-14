@@ -606,21 +606,8 @@ export interface Tool {
  */
 export interface Song {
   id: string;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: string;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  title?: string | null;
+  url?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1326,7 +1313,8 @@ export interface ProjectsSelect<T extends boolean = true> {
  * via the `definition` "songs_select".
  */
 export interface SongsSelect<T extends boolean = true> {
-  content?: T;
+  title?: T;
+  url?: T;
   updatedAt?: T;
   createdAt?: T;
 }

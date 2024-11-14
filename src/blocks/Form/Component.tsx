@@ -125,10 +125,10 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div className="container lg:max-w-[48rem] pb-20">
+    <div className="container py-20">
       <FormProvider {...formMethods}>
         {enableIntro && introContent && !hasSubmitted && (
-          <RichText className="mb-8" content={introContent} enableGutter={false} />
+          <RichText className="mb-8" content={introContent} />
         )}
         {!isLoading && hasSubmitted && confirmationType === 'message' && (
           <RichText content={confirmationMessage} />

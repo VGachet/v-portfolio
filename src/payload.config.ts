@@ -14,7 +14,7 @@ import {
   ItalicFeature,
   LinkFeature,
   ParagraphFeature,
-  lexicalEditor,
+  lexicalEditor, UploadFeature,
 } from '@payloadcms/richtext-lexical'
 import sharp from 'sharp' // editor-import
 import { UnderlineFeature } from '@payloadcms/richtext-lexical'
@@ -41,6 +41,8 @@ import { Page, Post } from 'src/payload-types'
 
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import nodemailerSendgrid from 'nodemailer-sendgrid'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -101,8 +103,7 @@ export default buildConfig({
           enabledCollections: ['pages', 'posts'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              if ('name' in field && field.name === 'url') return false
-              return true
+              return !('name' in field && field.name === 'url');
             })
 
             return [
@@ -119,6 +120,9 @@ export default buildConfig({
             ]
           },
         }),
+        HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+        UploadFeature(),
+        FixedToolbarFeature(),
       ]
     },
   }),
@@ -136,7 +140,14 @@ export default buildConfig({
     Stacks,
     Projects,
     Songs
-  ], // collections-import-placeholder
+  ],
+  email: nodemailerAdapter({
+    defaultFromAddress: 'contact@vgachet.dev',
+    defaultFromName: 'Vincent Gachet',
+    transportOptions: nodemailerSendgrid({
+      apiKey: process.env.SENDGRID_API_KEY || '',
+    }),
+  }),
   cors: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer, Menu],
   plugins: [

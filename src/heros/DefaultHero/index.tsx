@@ -13,7 +13,7 @@ type DefaultHeroType = {
 export const DefaultHero: React.FC<DefaultHeroType> = ({ media, richText }) => {
   return (
     <div>
-      <div className="container mt-6">
+      <div className="container my-6">
           {richText && <RichText content={richText} />}
       </div>
       {media && typeof media === 'object' && (

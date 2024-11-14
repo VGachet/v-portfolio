@@ -23,9 +23,10 @@ export const CollectionArchive: React.FC<Props> = (props) => {
           {archiveList?.map((result, index) => {
             if (typeof result === 'object' && result !== null) {
               return (
-                <div key={index}>
-                  {relationTo === 'post' && <Card className="h-full" doc={result} relationTo="posts" showCategories />}
-                  {relationTo !== 'post' && <Tile relationTo={relationTo} doc={result} />}
+                <div key={index} className={`animate-in slide-in-from-left duration-500 repeat-1`}>
+                  {relationTo === 'post' && <Card doc={result} relationTo="posts" showCategories />}
+                  {relationTo !== 'post' && relationTo !== 'songs' && <Tile relationTo={relationTo} doc={result} />}
+                  {relationTo === 'songs' && <iframe title={result.title} src={result.url} className={'w-full max-h-[120px] outline-0'}/>}
                 </div>
               )
             }
