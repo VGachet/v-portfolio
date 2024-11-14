@@ -368,6 +368,7 @@ export interface MediaBlock {
  * via the `definition` "ArchiveBlock".
  */
 export interface ArchiveBlock {
+  columns?: number | null;
   introContent?: {
     root: {
       type: string;
@@ -1042,6 +1043,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?:
           | T
           | {
+              columns?: T;
               introContent?: T;
               populateBy?: T;
               relationTo?: T;

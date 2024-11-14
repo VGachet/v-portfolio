@@ -23,7 +23,8 @@ export const ArchiveBlock: React.FC<
     relationTo,
     showAllLink ,
     showAllLinkLabel,
-    showAllLinkUrl
+    showAllLinkUrl,
+    columns,
   } = props
 
   if (relationTo === undefined || relationTo === null) {
@@ -69,14 +70,14 @@ export const ArchiveBlock: React.FC<
   return (
     <div id={`block-${id}`}>
       {introContent && (
-        <div className="container">
-          <RichText className="ml-0 max-w-[48rem]" content={introContent} />
+        <div className="container pt-20 pb-6">
+          <RichText content={introContent} />
         </div>
       )}
-      <CollectionArchive archiveList={archiveList} relationTo={relationTo} />
+      <CollectionArchive archiveList={archiveList} relationTo={relationTo} columns={columns}/>
       {showAllLink && showAllLinkUrl !== undefined && showAllLinkUrl !== null && (
-        <div className="container">
-          <CMSLink label={showAllLinkLabel} url={showAllLinkUrl.value['slug']}/>
+        <div className="container pt-6">
+          <CMSLink label={showAllLinkLabel} url={showAllLinkUrl.value['slug']} variant={'ghost'} displayIcon={true}/>
         </div>
       )}
     </div>

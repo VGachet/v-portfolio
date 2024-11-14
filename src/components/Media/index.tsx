@@ -12,13 +12,7 @@ export const Media: React.FC<Props> = (props) => {
   const Tag = (htmlElement as any) || Fragment
 
   return (
-    <Tag
-      {...(htmlElement !== null
-        ? {
-            className,
-          }
-        : {})}
-    >
+    <Tag {...(htmlElement !== null ? { className } : {})}>
       {isVideo ? <VideoMedia {...props} /> : <ImageMedia {...props} />}
     </Tag>
   )
