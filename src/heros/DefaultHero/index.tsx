@@ -3,30 +3,29 @@ import React from 'react'
 import type { Page } from '@/payload-types'
 
 import { Media } from '@/components/Media'
-import RichText from '@/components/RichText'
+import { RichText } from '@/components/RichText'
 
 type DefaultHeroType = {
-  media?: Page['hero']['media']
-  richText?: Page['hero']['richText']
+  page?: Page
 }
 
-export const DefaultHero: React.FC<DefaultHeroType> = ({ media, richText }) => {
+export const DefaultHero: React.FC<DefaultHeroType> = ({ page }) => {
   return (
     <div>
       <div className="container my-6">
-          {richText && <RichText content={richText} />}
+          {page?.hero?.richText && <RichText content={page.hero.richText} />}
       </div>
-      {media && typeof media === 'object' && (
+      {page?.hero?.media && typeof page?.hero?.media === 'object' && (
         <div>
           <Media
             className="-mx-4 md:-mx-8 2xl:-mx-16"
             imgClassName=""
             priority
-            resource={media}
+            resource={page?.hero?.media}
           />
-          {media?.caption && (
+          {page?.hero?.media?.caption && (
             <div className="mt-3">
-              <RichText content={media.caption} />
+              <RichText content={page?.hero?.media.caption} />
             </div>
           )}
         </div>

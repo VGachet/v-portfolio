@@ -5,7 +5,6 @@ import type { Experience, Post, Project, Song, Stack, Tool } from '@/payload-typ
 
 import { Card } from '@/components/Card'
 import { Tile } from '@/components/Tile'
-import { res } from 'pino-std-serializers'
 
 export type Props = {
   archiveList: Post[] | Experience[] | Project[] | Song[] | Stack[] | Tool[]

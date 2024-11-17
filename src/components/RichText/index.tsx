@@ -7,7 +7,7 @@ type Props = {
   content: Record<string, any>
 }
 
-const RichText: React.FC<Props> = ({
+export const RichText: React.FC<Props> = ({
   className,
   content,
 }) => {

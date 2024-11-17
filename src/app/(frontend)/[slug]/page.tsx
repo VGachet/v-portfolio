@@ -53,7 +53,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  const { hero, layout } = page
+  const {  layout } = page
 
   return (
     <article className="pt-4 pb-4">
@@ -61,7 +61,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
 
-      <RenderHero {...hero} />
+      <RenderHero {...page} />
       <RenderBlocks blocks={layout} />
     </article>
   )
