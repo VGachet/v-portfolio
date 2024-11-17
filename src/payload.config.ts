@@ -215,7 +215,7 @@ export default buildConfig({
         },
       },
     }),
-    payloadCloudPlugin(), // storage-adapter-placeholder
+    payloadCloudPlugin(),
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
