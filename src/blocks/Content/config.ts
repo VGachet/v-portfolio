@@ -1,10 +1,10 @@
 import type { Block, Field } from 'payload'
 
 import {
+  AlignFeature,
   FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
+  HeadingFeature, InlineCodeFeature,
+  lexicalEditor, ParagraphFeature, TreeViewFeature,
 } from '@payloadcms/richtext-lexical'
 
 const columnFields: Field[] = [
@@ -16,8 +16,10 @@ const columnFields: Field[] = [
         return [
           ...rootFeatures,
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+          ParagraphFeature(),
+          InlineCodeFeature(),
+          AlignFeature(),
           FixedToolbarFeature(),
-          InlineToolbarFeature(),
         ]
       },
     }),
@@ -49,6 +51,14 @@ const columnFields: Field[] = [
     admin: {
       condition: (_, siblingData) => siblingData.enableLink,
       width: '50%',
+    },
+  },
+  {
+    name: 'isGhostLink',
+    type: 'checkbox',
+    label: 'Ghost link',
+    admin: {
+      condition: (_, siblingData) => siblingData.enableLink,
     },
   }
 ]

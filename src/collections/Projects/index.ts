@@ -26,6 +26,12 @@ export const Projects: CollectionConfig = {
       label: 'Content',
     },
     {
+      name: 'isSquareImage',
+      label: 'Square Image',
+      type: 'checkbox',
+      defaultValue: true,
+    },
+    {
       name: 'enabledLink',
       label: 'Enabled Link',
       type: 'checkbox',

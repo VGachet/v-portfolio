@@ -18,18 +18,18 @@ export async function Footer() {
   const navItems = footer?.navItems || []
 
   return (
-    <div className={'container'}>
+    <div className={'container pb-8'}>
       <div className={'grid grid-cols-2'}>
-        <NavigationMenu orientation="vertical">
-          <NavigationMenuList>
+        <NavigationMenu>
+          <NavigationMenuList className={'flex flex-col'}>
             {navItems.map(async ({ link }, i) => (
                 <NavigationMenuItem key={i}>
-                  <CMSLink {...link}/>
+                  <CMSLink {...link} variant={'ghost'} displayIcon={true}/>
                 </NavigationMenuItem>
             ))}
           </NavigationMenuList>
         </NavigationMenu>
-        <div>
+        <div className={'flex justify-end items-center'}>
           <ThemeSelector />
         </div>
       </div>

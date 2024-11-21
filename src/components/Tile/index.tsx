@@ -15,12 +15,14 @@ export const Tile: React.FC<{
   relationTo?: String
 }> = (props) => {
   const { className, doc, relationTo: titleFromProps } = props
-  const { media, title, content, link, enabledLink } = doc || {}
+  const { media, title, content, link, enabledLink, isSquareImage } = doc || {}
 
   const from = doc && doc['from'] ? doc['from'] : undefined
   const to = doc && doc['to'] ? doc['to'] : undefined
 
   const newTabProps = link?.newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
+
+  const imageClassName = isSquareImage ? 'rounded-lg aspect-square' : 'rounded-lg'
 
   return (
     <a className={cn('flex items-center py-2 hover:bg-card rounded-lg transition-colors', className)} href={
@@ -32,8 +34,8 @@ export const Tile: React.FC<{
     } {...newTabProps}>
       <div className="max-w-[60px]">
         {!media && <div className="">No image</div>}
-        {Array.isArray(media) && media.length > 0 && <Media imgClassName={'rounded-lg aspect-square'} resource={media[0]} size={'60px'} />}
-        {media && !Array.isArray(media) && <Media imgClassName={'rounded-lg aspect-square'} resource={media} size={'60px'} />}
+        {Array.isArray(media) && media.length > 0 && <Media imgClassName={imageClassName} resource={media[0]} size={'60px'} />}
+        {media && !Array.isArray(media) && <Media imgClassName={imageClassName} resource={media} size={'60px'} />}
       </div>
       <div className="pl-3 text-sm">
         {title && <h5>{title}</h5>}

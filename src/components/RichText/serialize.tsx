@@ -7,6 +7,8 @@ import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexi
 import type { BannerBlock as BannerBlockProps } from '@/payload-types'
 
 import {
+  ELEMENT_FORMAT_TO_TYPE,
+  IS_ALIGN_CENTER, IS_ALIGN_END, IS_ALIGN_JUSTIFY, IS_ALIGN_RIGHT,
   IS_BOLD,
   IS_CODE,
   IS_ITALIC,
@@ -65,6 +67,9 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           }
           if (node.format & IS_SUPERSCRIPT) {
             text = <sup key={index}>{text}</sup>
+          }
+          if (node.format & IS_ALIGN_CENTER) {
+            text = <div key={index} style={{ textAlign: 'center' }}>{text}</div>
           }
 
           return text
@@ -126,6 +131,33 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               return <br key={index} />
             }
             case 'paragraph': {
+
+              if (serializedChildren != null
+                && serializedChildren['props'] != null
+                && serializedChildren['props']['children'].length == 0) {
+                return <br key={index} />
+              }
+
+              if (node.format == ELEMENT_FORMAT_TO_TYPE[IS_ALIGN_CENTER]) {
+                return (
+                  <p key={index} className={'text-center'}>
+                    {serializedChildren}
+                  </p>
+                )
+              } else if (node.format == ELEMENT_FORMAT_TO_TYPE[IS_ALIGN_JUSTIFY]) {
+                return (
+                  <p key={index} className={'text-justify'}>
+                    {serializedChildren}
+                  </p>
+                )
+              } else if (node.format == ELEMENT_FORMAT_TO_TYPE[IS_ALIGN_RIGHT]) {
+                return (
+                  <p key={index} className={'text-right'}>
+                    {serializedChildren}
+                  </p>
+                )
+              }
+
               return (
                 <p key={index}>
                   {serializedChildren}
@@ -188,6 +220,8 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                   reference={fields.doc as any}
                   type={fields.linkType === 'internal' ? 'reference' : 'custom'}
                   url={fields.url}
+                  variant={'ghost'}
+                  displayIcon={true}
                 >
                   {serializedChildren}
                 </CMSLink>

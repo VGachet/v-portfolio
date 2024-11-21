@@ -345,6 +345,7 @@ export interface ContentBlock {
               value: string | Post;
             } | null);
         linkLabel?: string | null;
+        isGhostLink?: boolean | null;
         id?: string | null;
       }[]
     | null;
@@ -451,6 +452,7 @@ export interface Experience {
   } | null;
   from: string;
   to?: string | null;
+  isSquareImage?: boolean | null;
   enabledLink?: boolean | null;
   link?: {
     label: string;
@@ -494,6 +496,7 @@ export interface Project {
     };
     [k: string]: unknown;
   } | null;
+  isSquareImage?: boolean | null;
   enabledLink?: boolean | null;
   link?: {
     label: string;
@@ -537,6 +540,7 @@ export interface Stack {
     };
     [k: string]: unknown;
   } | null;
+  isSquareImage?: boolean | null;
   enabledLink?: boolean | null;
   link?: {
     label: string;
@@ -580,6 +584,7 @@ export interface Tool {
     };
     [k: string]: unknown;
   } | null;
+  isSquareImage?: boolean | null;
   enabledLink?: boolean | null;
   link?: {
     label: string;
@@ -1014,6 +1019,7 @@ export interface PagesSelect<T extends boolean = true> {
                     enableLink?: T;
                     linkUrl?: T;
                     linkLabel?: T;
+                    isGhostLink?: T;
                     id?: T;
                   };
               id?: T;
@@ -1228,6 +1234,7 @@ export interface ExperiencesSelect<T extends boolean = true> {
   content?: T;
   from?: T;
   to?: T;
+  isSquareImage?: T;
   enabledLink?: T;
   link?:
     | T
@@ -1250,6 +1257,7 @@ export interface ToolsSelect<T extends boolean = true> {
   media?: T;
   title?: T;
   content?: T;
+  isSquareImage?: T;
   enabledLink?: T;
   link?:
     | T
@@ -1272,6 +1280,7 @@ export interface StacksSelect<T extends boolean = true> {
   media?: T;
   title?: T;
   content?: T;
+  isSquareImage?: T;
   enabledLink?: T;
   link?:
     | T
@@ -1294,6 +1303,7 @@ export interface ProjectsSelect<T extends boolean = true> {
   media?: T;
   title?: T;
   content?: T;
+  isSquareImage?: T;
   enabledLink?: T;
   link?:
     | T

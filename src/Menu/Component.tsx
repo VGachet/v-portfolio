@@ -19,7 +19,7 @@ export async function Menu() {
   const navItems = menu?.navItems || []
 
   return (
-    <NavigationMenu className="sticky w-fit mx-auto bottom-10 border bg-inherit rounded-lg">
+    <NavigationMenu className="sticky w-fit mx-auto md:bottom-32 bottom-20 border bg-inherit rounded-lg">
       <NavigationMenuList>
 
         {navItems.map(async ({ link }, i) => {

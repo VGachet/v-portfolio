@@ -38,6 +38,12 @@ export const Experiences: CollectionConfig = {
       label: 'To',
     },
     {
+      name: 'isSquareImage',
+      label: 'Square Image',
+      type: 'checkbox',
+      defaultValue: true,
+    },
+    {
       name: 'enabledLink',
       label: 'Enabled Link',
       type: 'checkbox',
