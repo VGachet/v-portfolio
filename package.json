@@ -47,8 +47,6 @@
     "lexical": "0.20.0",
     "lucide-react": "^0.378.0",
     "next": "15.0.0",
-    "nodemailer": "^6.9.16",
-    "nodemailer-sendgrid": "^1.0.3",
     "payload": "beta",
     "payload-admin-bar": "^1.0.6",
     "prism-react-renderer": "^2.3.1",

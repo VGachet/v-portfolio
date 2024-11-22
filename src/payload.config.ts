@@ -42,7 +42,6 @@ import { Page, Post } from 'src/payload-types'
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
-import nodemailerSendgrid from 'nodemailer-sendgrid'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -140,9 +139,15 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromAddress: 'contact@vgachet.dev',
     defaultFromName: 'Vincent Gachet',
-    transportOptions: nodemailerSendgrid({
-      apiKey: process.env.SENDGRID_API_KEY || '',
-    }),
+    transportOptions: {
+      host: process.env.SMTP_HOST,
+      port: 465,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      secure: true,
+    },
   }),
   cors: [process.env.NEXT_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer, Menu],

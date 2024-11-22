@@ -19,6 +19,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu'
+import { MoonIcon, SunIcon } from 'lucide-react'
 
 export const ThemeSelector: React.FC = () => {
   const { setTheme } = useTheme()
@@ -34,21 +35,20 @@ export const ThemeSelector: React.FC = () => {
     }
   }
 
+  const toggleTheme = () => {
+    const newTheme = value === 'dark' ? 'light' : 'dark'
+    setTheme(newTheme)
+    setValue(newTheme)
+  }
+
   React.useEffect(() => {
     const preference = window.localStorage.getItem(themeLocalStorageKey)
     setValue(preference ?? 'auto')
   }, [])
 
   return (
-    <Select onValueChange={onThemeChange} value={value}>
-      <SelectTrigger className="w-auto bg-transparent gap-2 pl-0 md:pl-3 border-none">
-        <SelectValue placeholder="Theme" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="auto">Auto</SelectItem>
-        <SelectItem value="light">Light</SelectItem>
-        <SelectItem value="dark">Dark</SelectItem>
-      </SelectContent>
-    </Select>
+    <button onClick={toggleTheme}>
+      {value === 'dark' ? <SunIcon /> : <MoonIcon />}
+    </button>
   )
 }
