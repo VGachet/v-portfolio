@@ -26,7 +26,7 @@ export const Tile: React.FC<{
 
   return (
     <div className={'mr-1'}>
-      <a className={cn('flex items-center py-2 hover:bg-card rounded-lg transition-colors', className)} href={
+      <a className={cn('flex items-center my-1 py-3 hover:bg-card rounded-lg transition-colors', className)} href={
         link && link.url
           ? link.url
           : link && link.reference != null && typeof link.reference === 'object' && link.reference.value && link.reference.value['slug']
@@ -38,10 +38,10 @@ export const Tile: React.FC<{
           {Array.isArray(media) && media.length > 0 && <Media imgClassName={imageClassName} resource={media[0]} size={'60px'} />}
           {media && !Array.isArray(media) && <Media imgClassName={imageClassName} resource={media} size={'60px'} />}
         </div>
-        <div className="pl-3 text-sm">
-          {title && <h5>{title}</h5>}
-          {content && <RichText content={content} />}
-          {from && <time dateTime={from}>{formatDateTime(from)}{to && ` - ${formatDateTime(to)}`}{!to && ' - Today'}</time>}
+        <div className="pl-3">
+          {title && <h4>{title}</h4>}
+          {content && <RichText content={content} className={'text-sm'} />}
+          {from && <time className={'text-xs'} dateTime={from}>{formatDateTime(from)}{to && ` - ${formatDateTime(to)}`}{!to && ' - Today'}</time>}
         </div>
       </a>
     </div>
