@@ -1,6 +1,5 @@
 import { CollectionConfig } from 'payload';
 import {link} from "@/fields/link";
-import { slugField } from '@/fields/slug'
 
 export const Stacks: CollectionConfig = {
   slug: 'stacks',
