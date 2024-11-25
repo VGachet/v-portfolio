@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import type { Header } from '@/payload-types'
 
 import { Logo } from '@/components/Logo/Logo'
-import { HeaderNav } from './Nav'
+import { HeaderNav } from '@/globals/Header/Nav'
 
 interface HeaderClientProps {
   header: Header
@@ -31,7 +31,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 
   return (
     <header className={'flex justify-between container py-6'} {...(theme ? { 'data-theme': theme } : {})}>
-      <Link className={'pr-4 py-2'} href="/">
+      <Link className={'pr-4 py-2'} href="/public">
         <Logo />
       </Link>
       <HeaderNav header={header} />

@@ -18,6 +18,12 @@ export const Archive: Block = {
       label: 'Columns',
     },
     {
+      name: 'hasIntroContent',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Display Intro Content',
+    },
+    {
       name: 'introContent',
       type: 'richText',
       editor: lexicalEditor({
@@ -31,6 +37,9 @@ export const Archive: Block = {
         },
       }),
       label: 'Intro Content',
+      admin: {
+        condition: (_, siblingData) => siblingData.hasIntroContent,
+      },
     },
     {
       name: 'populateBy',

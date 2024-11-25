@@ -16,6 +16,7 @@ export const ArchiveBlock: React.FC<
   const {
     id,
     categories,
+    hasIntroContent,
     introContent,
     limit: limitFromProps,
     populateBy,
@@ -69,7 +70,7 @@ export const ArchiveBlock: React.FC<
 
   return (
     <div id={`block-${id}`}>
-      {introContent && (
+      {hasIntroContent && introContent && (
         <div className="container pt-20 pb-6">
           <RichText content={introContent} />
         </div>

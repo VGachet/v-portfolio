@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'An open-source website built with Payload and Next.js.',
+  description: 'My open-source portfolio built with Payload CMS, Next.js, and Tailwind CSS.',
   images: [
     {
       url: process.env.NEXT_PUBLIC_SERVER_URL
-        ? `${process.env.NEXT_PUBLIC_SERVER_URL}/website-template-OG.webp`
-        : '/website-template-OG.webp',
+        ? `${process.env.NEXT_PUBLIC_SERVER_URL}/vg_dark.png`
+        : '/vg_dark.png',
     },
   ],
   siteName: 'Vincent Gachet Portfolio',

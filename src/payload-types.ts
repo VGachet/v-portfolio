@@ -370,6 +370,7 @@ export interface MediaBlock {
  */
 export interface ArchiveBlock {
   columns?: number | null;
+  hasIntroContent?: boolean | null;
   introContent?: {
     root: {
       type: string;
@@ -1037,6 +1038,7 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               columns?: T;
+              hasIntroContent?: T;
               introContent?: T;
               populateBy?: T;
               relationTo?: T;

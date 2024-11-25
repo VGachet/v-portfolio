@@ -3,9 +3,9 @@ import type { Metadata } from 'next'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
-import { Footer } from '@/Footer/Component'
-import { Menu } from '@/Menu/Component'
-import { Header } from '@/Header/Component'
+import { Footer } from '@/globals/Footer/Component'
+import { Menu } from '@/globals/Menu/Component'
+import { Header } from '@/globals/Header/Component'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
@@ -17,7 +17,6 @@ import { Libre_Franklin } from 'next/font/google'
 
 const libreFranklin = Libre_Franklin({subsets: ['latin']})
 
-import { Analytics } from '@vercel/analytics/next';
 import { cn } from '@/utilities/cn'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -31,7 +30,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
       <body className={cn(libreFranklin.className, 'max-w-[900px]', 'mx-auto')}>
-        <Analytics />
         <Providers>
           <AdminBar
             adminBarProps={{
@@ -51,7 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL || 'https://payloadcms.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL),
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',
