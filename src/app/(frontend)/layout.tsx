@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 
 import React from 'react'
 
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
+
 import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/globals/Footer/Component'
 import { Menu } from '@/globals/Menu/Component'
@@ -29,6 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>
+      <GoogleTagManager gtmId="GTM-KSM6KKRR" />
       <body className={cn(libreFranklin.className, 'max-w-[900px]', 'mx-auto')}>
         <Providers>
           <AdminBar
@@ -44,6 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Footer />
         </Providers>
       </body>
+      <GoogleAnalytics gaId="G-2MKV2H213W" />
     </html>
   )
 }

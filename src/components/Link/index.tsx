@@ -5,8 +5,6 @@ import React from 'react'
 
 import type { Page, Post } from '@/payload-types'
 import { ArrowUpRightIcon } from 'lucide-react'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import configPromise from '@payload-config'
 
 type CMSLinkType = {
   children?: React.ReactNode
@@ -22,12 +20,6 @@ type CMSLinkType = {
   type?: 'custom' | 'reference' | null
   url?: string | null
   displayIcon?: boolean | null
-}
-
-type Args = {
-  params: Promise<{
-    slug?: string
-  }>
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
