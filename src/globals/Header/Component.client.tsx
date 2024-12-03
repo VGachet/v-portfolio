@@ -31,7 +31,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 
   return (
     <header className={'flex justify-between container py-6'} {...(theme ? { 'data-theme': theme } : {})}>
-      <Link className={'pr-4 py-2'} href="/public">
+      <Link className={'pr-4 py-2'} href="/">
         <Logo />
       </Link>
       <HeaderNav header={header} />
